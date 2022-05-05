@@ -60,7 +60,8 @@ def bit_tail():
 # to avoid going left when the snake is forwarding
 verHor = [False,False]
 
-
+score_inc =0
+# score
 
 
     
@@ -88,7 +89,7 @@ while game_active:
             quit_game()
         if event.type == pygame.KEYDOWN:
             
-            if event.key == pygame.K_UP:
+            if event.key == pygame.K_UP or event.key == pygame.K_w:
                 if verHor[0]:
                     break
                 x1_change=0
@@ -96,21 +97,21 @@ while game_active:
                 verHor[0]=True
                 verHor[1]=False
                 
-            if event.key == pygame.K_DOWN:
+            if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                 if verHor[0]:
                     break
                 x1_change=0
                 y1_change =snake_block
                 verHor[0]=True 
                 verHor[1]=False 
-            if event.key == pygame.K_LEFT:
+            if event.key == pygame.K_LEFT or event.key == pygame.K_a:
                 if verHor[1]:
                     break
                 x1_change =-snake_block
                 y1_change=0
                 verHor[1]=True 
                 verHor[0]=False 
-            if event.key == pygame.K_RIGHT:
+            if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                 if verHor[1]:
                     break
                 x1_change =snake_block
@@ -119,6 +120,12 @@ while game_active:
                 verHor[0]=False 
 
          
+    text ="Score : {0}".format(score_inc)
+    font_score = pygame.font.Font(None,30)
+    score = font_score.render(text,False,"Pink")
+    score_rect = score.get_rect(topleft=(0,0))
+    
+    
 
     if x1 >= SCREEN_WIDTH or x1 < 0 or y1 >= SCREEN_HEIGHT or y1 < 0:
         game_active = False
@@ -127,7 +134,7 @@ while game_active:
 
     screen.fill("white")
     #pygame.draw.rect(screen,"Blue",[x1,y1,snake_block,snake_block])
-    
+    screen.blit(score,score_rect)
     pygame.draw.rect(screen,"Red",[foodx,foody,snake_block,snake_block])
 
     snake_head =[]
@@ -150,6 +157,9 @@ while game_active:
         foodx= foodx_list[rand_x]
         foody= foody_list[rand_y] 
         snake_length +=1
+        score_inc +=1
+        
+    
 
     
     if not game_active:
